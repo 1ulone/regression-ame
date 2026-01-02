@@ -63,6 +63,15 @@ public class PlayerController : MonoBehaviour, IHealthComponent
 
     private void Update()
     {
+        if (Time.timeScale == 0)
+            return; 
+
+        if (health <= 0)
+        {
+            DeathUI.instances.StartDeathTransition(0);
+            return;
+        }
+
         rdir = move.ReadValue<Vector2>();
 
         if (startTime != 0)

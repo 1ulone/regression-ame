@@ -136,6 +136,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   damage: 1
+  isTrigger: 1
 --- !u!61 &-2976420838267213264
 BoxCollider2D:
   m_ObjectHideFlags: 0

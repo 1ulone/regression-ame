@@ -1,6 +1,5 @@
-using UnityEngine;
 
-public class PlayerBuffData : ScriptableObject 
+public class PlayerBuffData 
 {
     public int health; 
     public float moveSpeed; 
