@@ -9,7 +9,7 @@ public class EnemyMelee : BaseEnemy
         base.enterAttack();
 
         Vector3 dir = chaseTarget.position - transform.position;
-        attackObject = Pool.instances.CreateObject("enemyMeleeAttack", transform.position + (dir.normalized * 2f), dir);
+        data.getAttackBehaviour(dir).Invoke();
     }
 
     protected override void exitAttack()

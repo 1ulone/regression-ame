@@ -17,13 +17,14 @@ public class BaseEnemy : MonoBehaviour, IHealthComponent
     protected float startTime;
     protected int health;
     
+    [SerializeField] protected EnemyData data;
     [SerializeField] private int maxHealth = 5;
     [SerializeField] private float chaseSpeed = 4;
     [SerializeField] private float chaseRange = 10;
     [SerializeField] private float attackRange = 2;
-    [SerializeField] private LayerMask playerLayer;
     [SerializeField] private float attackTime = 1;
     [SerializeField] private float cooldownTime = 2;
+    [SerializeField] private LayerMask playerLayer;
     
     private void Start()
     {

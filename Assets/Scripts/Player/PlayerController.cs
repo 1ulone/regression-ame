@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour, IHealthComponent
     [SerializeField] private float defaultAttackTime = 0.15f;
     [SerializeField] private float defaultAttackCooldownTime = 0.3f;
     [SerializeField] private float defaultRandomShootMultiplier = 0.25f;
+    [SerializeField] private float defaultBulletSpeed = 3f;
     
     private InputAction move;
     private InputAction attack;
@@ -40,6 +41,7 @@ public class PlayerController : MonoBehaviour, IHealthComponent
     public float attackTime { get; set; }
     public float attackCooldownTime { get; set; }
     public float randomShootMultiplier { get; set; }
+    public float bulletSpeed { get; set; }
 
     private void Start()
     {
@@ -125,7 +127,7 @@ public class PlayerController : MonoBehaviour, IHealthComponent
             Vector3 dir = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()) - transform.position;
             GameObject bullet = Pool.instances.CreateObject("playerBullet", transform.position + dir.normalized + shootRandomness, Vector3.zero);
 
-            bullet.GetComponent<Rigidbody2D>().linearVelocity = dir * 3;
+            bullet.GetComponent<Rigidbody2D>().linearVelocity = dir * bulletSpeed;
         }
 
         if (roll.WasPressedThisFrame() && !isRolling && !rollOnCooldown && !isAttack)
@@ -173,6 +175,7 @@ public class PlayerController : MonoBehaviour, IHealthComponent
             totalBuff.attackTime += buffs[i].attackTime;
             totalBuff.attackCooldownTime += buffs[i].attackCooldownTime;
             totalBuff.randomShootMultiplier += buffs[i].randomShootMultiplier;
+            totalBuff.bulletSpeed += buffs[i].bulletSpeed;
         }
 
         maxHealth = defaultMaxHealth + totalBuff.health;
@@ -183,6 +186,7 @@ public class PlayerController : MonoBehaviour, IHealthComponent
         attackTime = defaultAttackTime + totalBuff.attackTime;
         attackCooldownTime = defaultAttackCooldownTime + totalBuff.attackCooldownTime;
         randomShootMultiplier = defaultRandomShootMultiplier + totalBuff.randomShootMultiplier;
+        bulletSpeed = defaultBulletSpeed + totalBuff.bulletSpeed;
     }
 
     public void ResetPlayerStats()
@@ -195,6 +199,7 @@ public class PlayerController : MonoBehaviour, IHealthComponent
         attackTime = defaultAttackTime;
         attackCooldownTime = defaultAttackCooldownTime;
         randomShootMultiplier = defaultRandomShootMultiplier;
+        bulletSpeed = defaultBulletSpeed;
     }
 
 

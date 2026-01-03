@@ -12,7 +12,7 @@ public class EnemyData : ScriptableObject
 {
     public attackType type;
     public string attackPrefab;
-    public int attackCount;
+    public int attackCount = 1;
 
     public Action getAttackBehaviour(Vector2 dir)
     {
@@ -34,6 +34,11 @@ public class EnemyData : ScriptableObject
             {
                 return ()=>
                 {
+                    for (int i = 0; i < attackCount; i++)
+                    {
+                        GameObject b = Pool.instances.CreateObject(attackPrefab, dir, Vector2.zero);
+                        b.GetComponent<Rigidbody2D>().linearVelocity = dir * data.bulletSpeed; 
+                    }
                 };
             }
 

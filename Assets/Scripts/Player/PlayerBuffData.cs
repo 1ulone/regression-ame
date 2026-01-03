@@ -9,4 +9,5 @@ public class PlayerBuffData
     public float attackTime;
     public float attackCooldownTime;
     public float randomShootMultiplier;
+    public float bulletSpeed;
 }
