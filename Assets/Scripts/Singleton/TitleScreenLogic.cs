@@ -22,11 +22,19 @@ public class TitleScreenLogic : MonoBehaviour
 
     private IEnumerator loadingLevel()
     {
+        Time.timeScale = 0;
+
         SaveData currentData = GameController.instances.LoadData();
         yield return SceneManager.LoadSceneAsync(2, LoadSceneMode.Additive);
         yield return new WaitForSecondsRealtime(0.05f);
+
         GameObject.FindFirstObjectByType<TimeController>().countdown = currentData.time;
-        // GameObject.FindFirstObjectByType<PlayerController>().buffs = currentData.playerSkill;
+        PlayerController p = GameObject.FindFirstObjectByType<PlayerController>();
+        p.buffs = currentData.playerSkill;
+        p.UpdatePlayerStats();
+
+        yield return new WaitForSecondsRealtime(0.05f);
+        Time.timeScale = 1;
 
         yield return SceneManager.UnloadSceneAsync(0);
     }

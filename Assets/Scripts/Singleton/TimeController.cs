@@ -16,6 +16,15 @@ public class TimeController : MonoBehaviour
 
     private void Update()
     {
+        if (Time.timeScale == 0)
+            return;
+
+        if (countdown <= 0)
+        {
+            DeathUI.instances.StartDeathTransitionByTime();
+            return;
+        }
+
         countdown -= Time.deltaTime;
 
         TimeSpan timeSpan = TimeSpan.FromSeconds(countdown);

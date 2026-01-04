@@ -22,7 +22,7 @@ public class GameController : MonoBehaviour
     {
         if (!File.Exists(path))
         {
-            SaveData ndata = new SaveData(120);
+            SaveData ndata = new SaveData(5);
             WriteSave(ndata);
             return ndata;
         }
@@ -61,6 +61,13 @@ public class GameController : MonoBehaviour
         sav.playerSkill.Add(data);
         WriteSave(sav);
     }
+
+    public void AddTime(int time)
+    {
+        SaveData sav = LoadData();
+        sav.time += time;
+        WriteSave(sav);
+    }
     
     public void RestartLevel()
     {
@@ -73,11 +80,14 @@ public class GameController : MonoBehaviour
         yield return SceneManager.UnloadSceneAsync(2);
 
         yield return SceneManager.LoadSceneAsync(2, LoadSceneMode.Additive);
-        yield return new WaitForSecondsRealtime(0.1f);
+        yield return new WaitForSecondsRealtime(0.05f);
 
         GameObject.FindFirstObjectByType<TimeController>().countdown = data.time;
-        // GameObject.FindFirstObjectByType<PlayerController>().buffs = data.playerSkill;
+        PlayerController p = GameObject.FindFirstObjectByType<PlayerController>();
+        p.buffs = data.playerSkill;
+        p.UpdatePlayerStats();
 
+        yield return new WaitForSecondsRealtime(0.05f);
         Time.timeScale = 1;
     }
 }

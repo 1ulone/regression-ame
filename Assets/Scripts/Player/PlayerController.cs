@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
+using FirstGearGames.SmoothCameraShaker;
 
 public class PlayerController : MonoBehaviour, IHealthComponent
 {
@@ -16,6 +17,7 @@ public class PlayerController : MonoBehaviour, IHealthComponent
     [SerializeField] private float defaultAttackCooldownTime = 0.3f;
     [SerializeField] private float defaultRandomShootMultiplier = 0.25f;
     [SerializeField] private float defaultBulletSpeed = 3f;
+    [SerializeField] private ShakeData shootScreenshake;
     
     private InputAction move;
     private InputAction attack;
@@ -48,14 +50,11 @@ public class PlayerController : MonoBehaviour, IHealthComponent
 
     private void Start()
     {
-        buffs = FindFirstObjectByType<GameController>().LoadData().playerSkill;
+        // buffs = FindFirstObjectByType<GameController>().LoadData().playerSkill;
         rb = GetComponent<Rigidbody2D>();
 
         // ResetPlayerStats();
-        UpdatePlayerStats();
-        health = maxHealth;
-
-        ui.UpdateHealth(health, maxHealth);
+        // UpdatePlayerStats();
     }
 
     private void OnEnable()
@@ -125,14 +124,18 @@ public class PlayerController : MonoBehaviour, IHealthComponent
 
         if (attack.WasPressedThisFrame() && !isAttack && !attackOnCooldown && !isRolling)
         {
+            CameraShakerHandler.Shake(shootScreenshake);
+            
             startTime = Time.time;
             isAttack = true;
 
-            shootRandomness = new Vector3(Random.Range(-0.1f, 0.1f), Random.Range(-0.1f, 0.1f), 0);
+            shootRandomness = new Vector3(Random.Range(-1f, 1f) * randomShootMultiplier, Random.Range(-1f, 1f) * randomShootMultiplier, 0);
             Vector3 dir = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()) - transform.position;
             GameObject bullet = Pool.instances.CreateObject("playerBullet", transform.position + dir.normalized + shootRandomness, Vector3.zero);
 
-            bullet.GetComponent<Rigidbody2D>().linearVelocity = dir * bulletSpeed;
+            bullet.GetComponent<Rigidbody2D>().linearVelocity = (dir.normalized * 10) * bulletSpeed;
+
+            rb.AddForce((-dir.normalized * 100) * moveSpeed /2f);
         }
 
         if (roll.WasPressedThisFrame() && !isRolling && !rollOnCooldown && !isAttack)
@@ -173,10 +176,18 @@ public class PlayerController : MonoBehaviour, IHealthComponent
     public void UpdatePlayerStats()
     {
         if (buffs == null)
+        {
+            Debug.Log(buffs == null);
+            ResetPlayerStats();
             return;
+        }
 
         if (buffs.Count <= 0)
+        {
+            Debug.Log(buffs.Count);
+            ResetPlayerStats();
             return;
+        }
 
         PlayerBuffData totalBuff = new PlayerBuffData();
         for (int i = 0; i < buffs.Count; i++)
@@ -202,7 +213,8 @@ public class PlayerController : MonoBehaviour, IHealthComponent
         randomShootMultiplier = defaultRandomShootMultiplier + totalBuff.randomShootMultiplier;
         bulletSpeed = defaultBulletSpeed + totalBuff.bulletSpeed;
 
-        Debug.Log(moveSpeed + "=" + defaultMoveSpeed + "+" + totalBuff.moveSpeed);
+        health = maxHealth;
+        ui.UpdateHealth(health, maxHealth);
     }
 
     public void ResetPlayerStats()
