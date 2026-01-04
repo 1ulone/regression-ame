@@ -9,13 +9,12 @@ public class EnemyMelee : BaseEnemy
         base.enterAttack();
 
         Vector3 dir = chaseTarget.position - transform.position;
-        data.getAttackBehaviour(dir).Invoke();
+        data.getAttackBehaviour(transform.position, dir, this as BaseEnemy).Invoke();
     }
 
     protected override void exitAttack()
     {
         base.exitAttack();
-        Pool.instances.DestroyObject(attackObject);
         attackObject = null;
     }
 }

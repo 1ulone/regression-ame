@@ -25,6 +25,9 @@ public class BaseEnemy : MonoBehaviour, IHealthComponent
     [SerializeField] private float attackTime = 1;
     [SerializeField] private float cooldownTime = 2;
     [SerializeField] private LayerMask playerLayer;
+    [SerializeField] public float attackSpeed = 3;
+
+    public EnemyData _data { get { return data; } }
     
     private void Start()
     {
@@ -121,14 +124,14 @@ public class BaseEnemy : MonoBehaviour, IHealthComponent
     protected virtual void exitAttack() 
     {
         rb.linearVelocity = Vector2.zero;
-        Debug.Log("attack-end");
+        // Debug.Log("attack-end");
     }
 
     protected virtual void enterAttack() 
     {
         rb.linearVelocity = Vector2.zero;
         startTime = Time.time;
-        Debug.Log("attack");
+        // Debug.Log("attack");
     }
 
     protected void updateAttack() 
@@ -139,12 +142,12 @@ public class BaseEnemy : MonoBehaviour, IHealthComponent
 
     protected void exitCooldown() 
     {  
-        Debug.Log("cooldown-end");
+        // Debug.Log("cooldown-end");
     }
 
     protected void enterCooldown() 
     {
-        Debug.Log("enter-cooldown");
+        // Debug.Log("enter-cooldown");
         startTime = Time.time;
     }
 
@@ -159,7 +162,7 @@ public class BaseEnemy : MonoBehaviour, IHealthComponent
         Destroy(this.gameObject);
     }
 
-    public void OnDamage(int damage)
+    public void OnDamage(int damage, MonoBehaviour reference = null)
     {
         rb.linearVelocity = Vector2.zero;
         health -= damage;

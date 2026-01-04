@@ -4,6 +4,8 @@ public class DamageComponent : DestroyOnCollide
 {
     [SerializeField] protected int damage = 1;
     [SerializeField] protected bool isTrigger = false;
+    [SerializeField] protected bool willbeDestroyed = true; //<-- fucking redundant i know. so for melee attack it wont be destroyed until it finished 
+    public BaseEnemy enemyReference; //<-- shit here too, shit just need to work for now ong
 
     private void Awake()
         => GetComponent<BoxCollider2D>().isTrigger = isTrigger;
@@ -17,9 +19,10 @@ public class DamageComponent : DestroyOnCollide
         if (CheckForCollision(other.gameObject))
         {
             if (other.gameObject.TryGetComponent<IHealthComponent>(out IHealthComponent h))
-                h.OnDamage(damage);
+                h.OnDamage(damage, enemyReference);
 
-            Pool.instances.DestroyObject(this.gameObject);
+            if (willbeDestroyed)
+                Pool.instances.DestroyObject(this.gameObject);
         }
     }
 
@@ -31,9 +34,10 @@ public class DamageComponent : DestroyOnCollide
         if (CheckForCollision(other.gameObject))
         {
             if (other.gameObject.TryGetComponent<IHealthComponent>(out IHealthComponent h))
-                h.OnDamage(damage);
+                h.OnDamage(damage, enemyReference);
 
-            Pool.instances.DestroyObject(this.gameObject);
+            if (willbeDestroyed)
+                Pool.instances.DestroyObject(this.gameObject);
         }
     }
 }

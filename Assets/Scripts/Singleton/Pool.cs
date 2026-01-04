@@ -51,6 +51,7 @@ public class Pool : MonoBehaviour
 
         prefab.gameObject.transform.position = Vector3.zero;
         prefab.gameObject.SetActive(false);
+        prefab.transform.SetParent(this.transform);
 
         poolDicts[prefab.name.ToLower()].Enqueue(prefab);
     }

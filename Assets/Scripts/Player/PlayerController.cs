@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour, IHealthComponent
 {
@@ -31,7 +32,6 @@ public class PlayerController : MonoBehaviour, IHealthComponent
     private bool rollOnCooldown;
     private bool isAttack;
     private bool attackOnCooldown;
-    private PlayerBuffData[] buffs;
 
     public int maxHealth { get; set; } 
     public float moveSpeed { get; set; } 
@@ -43,11 +43,16 @@ public class PlayerController : MonoBehaviour, IHealthComponent
     public float randomShootMultiplier { get; set; }
     public float bulletSpeed { get; set; }
 
+    [HideInInspector] public List<PlayerBuffData> buffs = new List<PlayerBuffData>(); 
+    private BaseEnemy lastHit;
+
     private void Start()
     {
+        buffs = FindFirstObjectByType<GameController>().LoadData().playerSkill;
         rb = GetComponent<Rigidbody2D>();
 
-        ResetPlayerStats();
+        // ResetPlayerStats();
+        UpdatePlayerStats();
         health = maxHealth;
 
         ui.UpdateHealth(health, maxHealth);
@@ -70,7 +75,7 @@ public class PlayerController : MonoBehaviour, IHealthComponent
 
         if (health <= 0)
         {
-            DeathUI.instances.StartDeathTransition(0);
+            DeathUI.instances.StartDeathTransition(lastHit._data);
             return;
         }
 
@@ -154,8 +159,11 @@ public class PlayerController : MonoBehaviour, IHealthComponent
         rb.linearVelocity = rdir * moveSpeed;
     }
 
-    public void OnDamage(int damage)
+    public void OnDamage(int damage, MonoBehaviour reference = null)
     {
+        if (reference != null)
+            lastHit = reference as BaseEnemy;
+
         TimeController.instances.HitStop(0.1f);
         rb.linearVelocity = Vector2.zero;
         health -= damage;
@@ -164,8 +172,14 @@ public class PlayerController : MonoBehaviour, IHealthComponent
 
     public void UpdatePlayerStats()
     {
+        if (buffs == null)
+            return;
+
+        if (buffs.Count <= 0)
+            return;
+
         PlayerBuffData totalBuff = new PlayerBuffData();
-        for (int i = 0; i < buffs.Length; i++)
+        for (int i = 0; i < buffs.Count; i++)
         {
             totalBuff.health += buffs[i].health;
             totalBuff.moveSpeed += buffs[i].moveSpeed;
@@ -187,6 +201,8 @@ public class PlayerController : MonoBehaviour, IHealthComponent
         attackCooldownTime = defaultAttackCooldownTime + totalBuff.attackCooldownTime;
         randomShootMultiplier = defaultRandomShootMultiplier + totalBuff.randomShootMultiplier;
         bulletSpeed = defaultBulletSpeed + totalBuff.bulletSpeed;
+
+        Debug.Log(moveSpeed + "=" + defaultMoveSpeed + "+" + totalBuff.moveSpeed);
     }
 
     public void ResetPlayerStats()
