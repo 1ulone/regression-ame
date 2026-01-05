@@ -3,6 +3,7 @@ using System.Reflection;
 using System.Collections.Generic;
 
 [CreateAssetMenu(fileName = "new Buff Data", menuName = "Data/BuffData")]
+[System.Serializable]
 public class PlayerBuffData : ScriptableObject 
 {
     public Sprite icon;

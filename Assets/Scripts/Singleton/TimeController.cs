@@ -14,6 +14,11 @@ public class TimeController : MonoBehaviour
     private void Awake()
         => instances = this;
 
+    private void Start()
+    {
+        countdown = GameController.instances.currentSave.time;
+    }
+
     private void Update()
     {
         if (Time.timeScale == 0)

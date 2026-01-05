@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour, IHealthComponent
     private InputAction move;
     private InputAction attack;
     private InputAction roll;
+    private InputAction pause;
 
     private Rigidbody2D rb;
     private Vector2 rdir;
@@ -50,11 +51,11 @@ public class PlayerController : MonoBehaviour, IHealthComponent
 
     private void Start()
     {
-        // buffs = FindFirstObjectByType<GameController>().LoadData().playerSkill;
         rb = GetComponent<Rigidbody2D>();
-
         // ResetPlayerStats();
-        // UpdatePlayerStats();
+        
+        buffs = GameController.instances.currentSave.playerSkill;
+        UpdatePlayerStats();
     }
 
     private void OnEnable()
@@ -62,18 +63,26 @@ public class PlayerController : MonoBehaviour, IHealthComponent
         move = input.actions["Move"];
         attack = input.actions["Attack"];
         roll = input.actions["Jump"];
+        pause = input.actions["Pause"];
 
         move.Enable();
         attack.Enable();
+        roll.Enable();
+        pause.Enable();
     }
 
     private void Update()
     {
+        if (pause.WasPressedThisFrame())
+            PauseMenuUI.instances.TogglePauseMenu();
+
         if (Time.timeScale == 0)
             return; 
 
-        if (health <= 0)
+        if (health <= 0 )
         {
+            // if (lastHit == null)
+            //     return;
             DeathUI.instances.StartDeathTransition(lastHit._data);
             return;
         }
@@ -179,6 +188,9 @@ public class PlayerController : MonoBehaviour, IHealthComponent
         {
             Debug.Log(buffs == null);
             ResetPlayerStats();
+
+            health = maxHealth;
+            ui.UpdateHealth(health, maxHealth);
             return;
         }
 
@@ -186,32 +198,25 @@ public class PlayerController : MonoBehaviour, IHealthComponent
         {
             Debug.Log(buffs.Count);
             ResetPlayerStats();
+
+            health = maxHealth;
+            ui.UpdateHealth(health, maxHealth);
             return;
         }
 
-        PlayerBuffData totalBuff = new PlayerBuffData();
+        ResetPlayerStats();
         for (int i = 0; i < buffs.Count; i++)
         {
-            totalBuff.health += buffs[i].health;
-            totalBuff.moveSpeed += buffs[i].moveSpeed;
-            totalBuff.rollMultiplier += buffs[i].rollMultiplier;
-            totalBuff.rollTime += buffs[i].rollTime;
-            totalBuff.rollCooldownTime += buffs[i].rollCooldownTime;
-            totalBuff.attackTime += buffs[i].attackTime;
-            totalBuff.attackCooldownTime += buffs[i].attackCooldownTime;
-            totalBuff.randomShootMultiplier += buffs[i].randomShootMultiplier;
-            totalBuff.bulletSpeed += buffs[i].bulletSpeed;
+            maxHealth = defaultMaxHealth + buffs[i].health;
+            moveSpeed = defaultMoveSpeed + buffs[i].moveSpeed;
+            rollMultiplier = defaultRollMultiplier + buffs[i].rollMultiplier;
+            rollTime = defaultRollTime + buffs[i].rollTime;
+            rollCooldownTime = defaultRollCooldownTime + buffs[i].rollCooldownTime;
+            attackTime = defaultAttackTime + buffs[i].attackTime;
+            attackCooldownTime = defaultAttackCooldownTime + buffs[i].attackCooldownTime;
+            randomShootMultiplier = defaultRandomShootMultiplier + buffs[i].randomShootMultiplier;
+            bulletSpeed = defaultBulletSpeed + buffs[i].bulletSpeed;
         }
-
-        maxHealth = defaultMaxHealth + totalBuff.health;
-        moveSpeed = defaultMoveSpeed + totalBuff.moveSpeed;
-        rollMultiplier = defaultRollMultiplier + totalBuff.rollMultiplier;
-        rollTime = defaultRollTime + totalBuff.rollTime;
-        rollCooldownTime = defaultRollCooldownTime + totalBuff.rollCooldownTime;
-        attackTime = defaultAttackTime + totalBuff.attackTime;
-        attackCooldownTime = defaultAttackCooldownTime + totalBuff.attackCooldownTime;
-        randomShootMultiplier = defaultRandomShootMultiplier + totalBuff.randomShootMultiplier;
-        bulletSpeed = defaultBulletSpeed + totalBuff.bulletSpeed;
 
         health = maxHealth;
         ui.UpdateHealth(health, maxHealth);

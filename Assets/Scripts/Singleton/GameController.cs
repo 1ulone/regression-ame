@@ -8,6 +8,7 @@ public class GameController : MonoBehaviour
 {
     public static GameController instances;
     private string path;
+    public SaveData currentSave { get; private set; }
 
     private void Awake()
     {
@@ -18,19 +19,20 @@ public class GameController : MonoBehaviour
     public bool CheckForFile()
     { return File.Exists(path); }
 
-    public SaveData LoadData()
+    public void LoadData()
     {
         if (!File.Exists(path))
         {
             SaveData ndata = new SaveData(5);
             WriteSave(ndata);
-            return ndata;
+            currentSave = ndata;
         }
 
         string saveFile = File.ReadAllText(path);
         SaveData data = JsonUtility.FromJson<SaveData>(saveFile);
 
-        return data;
+        currentSave = data;
+        // return data;
     }
 
     public void WriteSave(SaveData data)
@@ -38,7 +40,6 @@ public class GameController : MonoBehaviour
         string textToSave = JsonUtility.ToJson(data);
         File.WriteAllText(path, textToSave);
     }
-
 
     public void ClearSave()
     {
@@ -50,23 +51,23 @@ public class GameController : MonoBehaviour
 
     public void RemoveSkill(PlayerBuffData data)
     {
-        SaveData sav = LoadData();
-        sav.playerSkill.Remove(data);
-        WriteSave(sav);
+        currentSave.playerSkill.Remove(data);
+        WriteSave(currentSave);
+        LoadData();
     }
 
     public void AddSkill(PlayerBuffData data)
     {
-        SaveData sav = LoadData();
-        sav.playerSkill.Add(data);
-        WriteSave(sav);
+        currentSave.playerSkill.Add(data);
+        WriteSave(currentSave);
+        LoadData();
     }
 
     public void AddTime(int time)
     {
-        SaveData sav = LoadData();
-        sav.time += time;
-        WriteSave(sav);
+        currentSave.time += time;
+        WriteSave(currentSave);
+        LoadData();
     }
     
     public void RestartLevel()
@@ -76,16 +77,17 @@ public class GameController : MonoBehaviour
 
     private IEnumerator restartTransition()
     {
-        SaveData data = LoadData();
+        LoadData();
         yield return SceneManager.UnloadSceneAsync(2);
+
 
         yield return SceneManager.LoadSceneAsync(2, LoadSceneMode.Additive);
         yield return new WaitForSecondsRealtime(0.05f);
 
-        GameObject.FindFirstObjectByType<TimeController>().countdown = data.time;
-        PlayerController p = GameObject.FindFirstObjectByType<PlayerController>();
-        p.buffs = data.playerSkill;
-        p.UpdatePlayerStats();
+        // GameObject.FindFirstObjectByType<TimeController>().countdown = .time;
+        // PlayerController p = GameObject.FindFirstObjectByType<PlayerController>();
+        // p.buffs = data.playerSkill;
+        // p.UpdatePlayerStats();
 
         yield return new WaitForSecondsRealtime(0.05f);
         Time.timeScale = 1;

@@ -17,6 +17,9 @@ public class TitleScreenLogic : MonoBehaviour
 
     public void onPlayGame()
     {
+        Camera.main.GetComponent<AudioListener>().enabled = false;
+        GameObject.Find("EventSystem").SetActive(false);
+
         StartCoroutine(loadingLevel());
     }
 
@@ -24,14 +27,20 @@ public class TitleScreenLogic : MonoBehaviour
     {
         Time.timeScale = 0;
 
-        SaveData currentData = GameController.instances.LoadData();
+        // SaveData currentData = GameController.instances.LoadData();
+        GameController.instances.LoadData();
         yield return SceneManager.LoadSceneAsync(2, LoadSceneMode.Additive);
         yield return new WaitForSecondsRealtime(0.05f);
 
-        GameObject.FindFirstObjectByType<TimeController>().countdown = currentData.time;
-        PlayerController p = GameObject.FindFirstObjectByType<PlayerController>();
-        p.buffs = currentData.playerSkill;
-        p.UpdatePlayerStats();
+        // GameObject.FindFirstObjectByType<TimeController>().countdown = currentData.time;
+        // PlayerController p = GameObject.FindFirstObjectByType<PlayerController>();
+        // p.buffs = currentData.playerSkill;
+
+        // Debug.Log(p.buffs[0] == null);
+        // Debug.Log(p.buffs[1] == null);
+        // Debug.Log(p.buffs + "=" + currentData.playerSkill);
+        yield return new WaitForSecondsRealtime(0.05f);
+        // p.UpdatePlayerStats();
 
         yield return new WaitForSecondsRealtime(0.05f);
         Time.timeScale = 1;

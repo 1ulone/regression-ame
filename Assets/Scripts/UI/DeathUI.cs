@@ -74,7 +74,7 @@ public class DeathUI : MonoBehaviour
             }
         }
 
-        selectArea.SyncWithData(GameController.instances.LoadData().playerSkill);
+        selectArea.SyncWithData(GameController.instances.currentSave.playerSkill);
         StartCoroutine(TransitionCoroutine());
     }
 
@@ -91,6 +91,9 @@ public class DeathUI : MonoBehaviour
 
         yield return new WaitForSecondsRealtime(0.15f);
         deathScreen.alpha = 1f;
+
+        deathScreen.interactable = true;
+        deathScreen.blocksRaycasts = true;
     }
 
     private IEnumerator TransitionByTime()
