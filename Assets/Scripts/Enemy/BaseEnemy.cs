@@ -18,13 +18,13 @@ public class BaseEnemy : MonoBehaviour, IHealthComponent
     protected int health;
     
     [SerializeField] protected EnemyData data;
-    [SerializeField] private int maxHealth = 5;
-    [SerializeField] private float chaseSpeed = 4;
-    [SerializeField] private float chaseRange = 10;
-    [SerializeField] private float attackRange = 2;
-    [SerializeField] private float attackTime = 1;
-    [SerializeField] private float cooldownTime = 2;
-    [SerializeField] private LayerMask playerLayer;
+    [SerializeField] protected int maxHealth = 5;
+    [SerializeField] protected float chaseSpeed = 4;
+    [SerializeField] protected float chaseRange = 10;
+    [SerializeField] protected float attackRange = 2;
+    [SerializeField] protected float attackTime = 1;
+    [SerializeField] protected float cooldownTime = 2;
+    [SerializeField] protected LayerMask playerLayer;
     [SerializeField] public float attackSpeed = 3;
 
     public EnemyData _data { get { return data; } }
@@ -134,7 +134,7 @@ public class BaseEnemy : MonoBehaviour, IHealthComponent
         // Debug.Log("attack");
     }
 
-    protected void updateAttack() 
+    protected virtual void updateAttack() 
     {
         if (Time.time > startTime + attackTime)
             ChangeState(state.cooldown);
