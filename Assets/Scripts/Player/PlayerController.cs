@@ -24,12 +24,21 @@ public class PlayerController : MonoBehaviour, IHealthComponent
     private InputAction roll;
     private InputAction pause;
 
+    // private const string idle = "Idle";
+    // private const string walkDown = "WalkDown";
+    // private const string walkRight = "WalkRight";
+    // private const string walkLeft = "WalkLeft";
+    // private const string walkUp = "WalkUp";
+
     private Rigidbody2D rb;
     private Vector2 rdir;
     private Vector3 shootRandomness;
+    private BaseEnemy lastHit;
+    private Animator anim;
 
     private float startTime;
     private int health;
+    private string state;
 
     private bool isRolling;
     private bool rollOnCooldown;
@@ -47,11 +56,11 @@ public class PlayerController : MonoBehaviour, IHealthComponent
     public float bulletSpeed { get; set; }
 
     [HideInInspector] public List<PlayerBuffData> buffs = new List<PlayerBuffData>(); 
-    private BaseEnemy lastHit;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
         // ResetPlayerStats();
         
         buffs = GameController.instances.currentSave.playerSkill;
@@ -131,6 +140,14 @@ public class PlayerController : MonoBehaviour, IHealthComponent
             }
         }
 
+        if (rdir != Vector2.zero)
+        {
+            anim.SetBool("IsRunUp", rdir.y > 0);
+            anim.SetBool("IsRunRight", rdir.x > 0 && rdir.y == 0);
+            anim.SetBool("IsRunDown", rdir.y < 0);
+            anim.SetBool("IsRunLeft", rdir.x < 0 && rdir.y == 0);
+        }
+
         if (attack.WasPressedThisFrame() && !isAttack && !attackOnCooldown && !isRolling)
         {
             CameraShakerHandler.Shake(shootScreenshake);
@@ -161,6 +178,7 @@ public class PlayerController : MonoBehaviour, IHealthComponent
                 rb.AddForce((rdir.normalized * 100) * moveSpeed * rollMultiplier);
             }
         }
+
     }
 
     private void FixedUpdate()
