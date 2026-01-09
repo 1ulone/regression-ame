@@ -1,6 +1,16 @@
+using System;
 using UnityEngine;
 using System.Reflection;
 using System.Collections.Generic;
+
+public enum passiveType
+{
+    none,
+    bulletHell,
+    shockwave,
+    randomSpawn
+}
+//needs better name fossho
 
 [CreateAssetMenu(fileName = "new Buff Data", menuName = "Data/BuffData")]
 [System.Serializable]
@@ -10,14 +20,11 @@ public class PlayerBuffData : ScriptableObject
     public string tag;
 
     public int health; 
-    public float moveSpeed; 
-    public float rollMultiplier;
-    public float rollTime;
-    public float rollCooldownTime; 
-    public float attackTime;
-    public float attackCooldownTime;
-    public float randomShootMultiplier;
-    public float bulletSpeed;
+    public int attack;
+    public float speed; 
+
+    public attackType behaviour;
+    public passiveType passive; 
 
     public Dictionary<string, float> GetNonZeroValues()
     {
@@ -42,5 +49,30 @@ public class PlayerBuffData : ScriptableObject
         }
 
         return result;
+    }
+    
+    public string GetDescription()
+    {
+        string h = health == 0 ? "" : (health > 0 ? "health +"+health.ToString() : "health -"+health.ToString());
+        string a = attack == 0 ? "" : (attack > 0 ? "attack +"+attack.ToString() : "attack -"+attack.ToString());
+        string s = speed == 0 ? "" : (speed > 0 ? "speed +"+speed.ToString() : "speed -"+speed.ToString());
+
+        string b = "";
+        switch (behaviour)
+        {
+            case attackType.melee : {  } break;
+            case attackType.shoot : {  } break;
+            case attackType.railgun : {  } break;
+            case attackType.spawn : {  } break;
+        }
+        
+        string p = "";
+        switch (passive)
+        {
+            case passiveType.bulletHell : { p = "Spawns 3 Magic Bullets around ame every 5s"; } break;
+        }
+
+        return h + a + s + b + p;
+
     }
 }

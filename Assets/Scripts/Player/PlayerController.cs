@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 using System.Collections.Generic;
 using FirstGearGames.SmoothCameraShaker;
 
@@ -9,6 +10,7 @@ public class PlayerController : MonoBehaviour, IHealthComponent
     [SerializeField] private PlayerUI ui;
 
     [SerializeField] private int defaultMaxHealth = 10;
+    [SerializeField] private int defaultDamage = 1;
     [SerializeField] private float defaultMoveSpeed = 7.5f;
     [SerializeField] private float defaultRollMultiplier = 1.5f;
     [SerializeField] private float defaultRollTime = 0.15f;
@@ -17,24 +19,21 @@ public class PlayerController : MonoBehaviour, IHealthComponent
     [SerializeField] private float defaultAttackCooldownTime = 0.3f;
     [SerializeField] private float defaultRandomShootMultiplier = 0.25f;
     [SerializeField] private float defaultBulletSpeed = 3f;
+
     [SerializeField] private ShakeData shootScreenshake;
+    [SerializeField] private ShakeData hurtScreenshake;
     
     private InputAction move;
     private InputAction attack;
     private InputAction roll;
     private InputAction pause;
 
-    // private const string idle = "Idle";
-    // private const string walkDown = "WalkDown";
-    // private const string walkRight = "WalkRight";
-    // private const string walkLeft = "WalkLeft";
-    // private const string walkUp = "WalkUp";
-
     private Rigidbody2D rb;
     private Vector2 rdir;
     private Vector3 shootRandomness;
     private BaseEnemy lastHit;
     private Animator anim;
+    private SpriteRenderer rend;
 
     private float startTime;
     private int health;
@@ -44,6 +43,7 @@ public class PlayerController : MonoBehaviour, IHealthComponent
     private bool rollOnCooldown;
     private bool isAttack;
     private bool attackOnCooldown;
+    private bool isHurt;
 
     public int maxHealth { get; set; } 
     public float moveSpeed { get; set; } 
@@ -54,6 +54,7 @@ public class PlayerController : MonoBehaviour, IHealthComponent
     public float attackCooldownTime { get; set; }
     public float randomShootMultiplier { get; set; }
     public float bulletSpeed { get; set; }
+    public int damage { get; set; }
 
     [HideInInspector] public List<PlayerBuffData> buffs = new List<PlayerBuffData>(); 
 
@@ -61,6 +62,7 @@ public class PlayerController : MonoBehaviour, IHealthComponent
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        rend = GetComponent<SpriteRenderer>();
         // ResetPlayerStats();
         
         buffs = GameController.instances.currentSave.playerSkill;
@@ -160,6 +162,7 @@ public class PlayerController : MonoBehaviour, IHealthComponent
             GameObject bullet = Pool.instances.CreateObject("playerBullet", transform.position + dir.normalized + shootRandomness, Vector3.zero);
 
             bullet.GetComponent<Rigidbody2D>().linearVelocity = (dir.normalized * 10) * bulletSpeed;
+            bullet.GetComponent<DamageComponent>().damage = damage;
 
             rb.AddForce((-dir.normalized * 100) * moveSpeed /2f);
         }
@@ -188,12 +191,37 @@ public class PlayerController : MonoBehaviour, IHealthComponent
 
         rb.linearVelocity = rdir * moveSpeed;
     }
+    
+    private IEnumerator hurtCoroutine()
+    {
+        int i = 0;
+        while(i < 5)
+        {
+            rend.enabled = true;
+            yield return new WaitForSeconds(0.05f); 
+            rend.enabled = false;
+            yield return new WaitForSeconds(0.05f);
+            i++;
+        }
+
+        rend.enabled = true;
+        isHurt = false;
+    }
 
     public void OnDamage(int damage, MonoBehaviour reference = null)
     {
+        if (isHurt)
+            return;
+
+        if (isRolling)
+            return;
+
         if (reference != null)
             lastHit = reference as BaseEnemy;
 
+        isHurt = true;
+        StartCoroutine(hurtCoroutine());
+        CameraShakerHandler.Shake(hurtScreenshake);
         TimeController.instances.HitStop(0.1f);
         rb.linearVelocity = Vector2.zero;
         health -= damage;
@@ -204,7 +232,7 @@ public class PlayerController : MonoBehaviour, IHealthComponent
     {
         if (buffs == null)
         {
-            Debug.Log(buffs == null);
+            // Debug.Log(buffs == null);
             ResetPlayerStats();
 
             health = maxHealth;
@@ -214,7 +242,7 @@ public class PlayerController : MonoBehaviour, IHealthComponent
 
         if (buffs.Count <= 0)
         {
-            Debug.Log(buffs.Count);
+            // Debug.Log(buffs.Count);
             ResetPlayerStats();
 
             health = maxHealth;
@@ -226,14 +254,8 @@ public class PlayerController : MonoBehaviour, IHealthComponent
         for (int i = 0; i < buffs.Count; i++)
         {
             maxHealth = defaultMaxHealth + buffs[i].health;
-            moveSpeed = defaultMoveSpeed + buffs[i].moveSpeed;
-            rollMultiplier = defaultRollMultiplier + buffs[i].rollMultiplier;
-            rollTime = defaultRollTime + buffs[i].rollTime;
-            rollCooldownTime = defaultRollCooldownTime + buffs[i].rollCooldownTime;
-            attackTime = defaultAttackTime + buffs[i].attackTime;
-            attackCooldownTime = defaultAttackCooldownTime + buffs[i].attackCooldownTime;
-            randomShootMultiplier = defaultRandomShootMultiplier + buffs[i].randomShootMultiplier;
-            bulletSpeed = defaultBulletSpeed + buffs[i].bulletSpeed;
+            damage = defaultDamage + buffs[i].attack;
+            moveSpeed = defaultMoveSpeed + buffs[i].speed;
         }
 
         health = maxHealth;
@@ -251,7 +273,6 @@ public class PlayerController : MonoBehaviour, IHealthComponent
         attackCooldownTime = defaultAttackCooldownTime;
         randomShootMultiplier = defaultRandomShootMultiplier;
         bulletSpeed = defaultBulletSpeed;
+        damage = defaultDamage;
     }
-
-
 }

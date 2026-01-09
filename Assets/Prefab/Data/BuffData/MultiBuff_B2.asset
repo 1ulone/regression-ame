@@ -10,16 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d61769248be8e3afd954b59811e555ed, type: 3}
-  m_Name: BasicHealthSpeed
+  m_Name: MultiBuff_B2
   m_EditorClassIdentifier: Assembly-CSharp::PlayerBuffData
   icon: {fileID: 2640810445432825198, guid: a9ae6d1629c829a86b2cf00478152c2a, type: 3}
-  tag: Health Buff Test
-  health: 2
-  moveSpeed: 1
-  rollMultiplier: 0
-  rollTime: 0
-  rollCooldownTime: 0
-  attackTime: 0
-  attackCooldownTime: 0
-  randomShootMultiplier: 0
-  bulletSpeed: 0
+  tag: Detective Kit
+  health: 1
+  attack: 1
+  speed: 1
+  behaviour: 0
+  passive: 0
