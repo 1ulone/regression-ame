@@ -64,16 +64,7 @@ public class PauseMenuUI : MonoBehaviour
             card.transform.SetParent(skillsHolder[i]);
             option.data = data[i];
             option.icon.sprite = data[i].icon;
-
-            Dictionary<string, float> nonZeroValue = data[i].GetNonZeroValues();
-            string[] tags = nonZeroValue.Keys.ToArray();
-            float[] values = nonZeroValue.Values.ToArray();
-
-            for (int x = 0; x < ( nonZeroValue.Count > 5 ? 5 : nonZeroValue.Count ); x++)
-            {
-                option.stats[x].gameObject.SetActive(true);
-                option.stats[x].text = tags[x] + " " + (values[x] > 0 ? "+" : "-") + values[x];
-            }
+            option.desc.text = data[i].GetDescription();
         }
 
         yield return new WaitForSecondsRealtime(0.25f);

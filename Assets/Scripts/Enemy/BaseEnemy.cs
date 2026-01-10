@@ -16,10 +16,9 @@ public class BaseEnemy : MonoBehaviour, IHealthComponent
     protected Transform chaseTarget;
     protected float startTime;
     protected int health;
+    protected float chaseSpeed;
     
     [SerializeField] protected EnemyData data;
-    [SerializeField] protected int maxHealth = 5;
-    [SerializeField] protected float chaseSpeed = 4;
     [SerializeField] protected float chaseRange = 10;
     [SerializeField] protected float attackRange = 2;
     [SerializeField] protected float attackTime = 1;
@@ -33,7 +32,8 @@ public class BaseEnemy : MonoBehaviour, IHealthComponent
     {
         rb = GetComponent<Rigidbody2D>();
         chaseTarget = GameObject.FindFirstObjectByType<PlayerController>().transform; 
-        health = maxHealth;
+        health = data.health;
+        chaseSpeed = data.moveSpeed;
 
         Initialize();
     }
