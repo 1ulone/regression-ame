@@ -2,14 +2,16 @@ using UnityEngine;
 
 public class DamageComponent : DestroyOnCollide 
 {
-    [SerializeField] protected int damage = 1;
+    public int damage { get; set; }
     [SerializeField] protected bool isTrigger = false;
     [SerializeField] protected bool willbeDestroyed = true; //<-- fucking redundant i know. so for melee attack it wont be destroyed until it finished 
     public BaseEnemy enemyReference; //<-- shit here too, shit just need to work for now ong
 
     private void Awake()
-        => GetComponent<BoxCollider2D>().isTrigger = isTrigger;
-    
+    {
+        GetComponent<BoxCollider2D>().isTrigger = isTrigger;
+        damage = 1;
+    }
     
     public override void OnCollisionEnter2D(Collision2D other)
     {

@@ -1,15 +1,16 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-using System.Linq;
 using System.Collections.Generic;
 
 public class DeathUISelectArea : MonoBehaviour, IDropHandler
 {
     public void OnDrop(PointerEventData eventData)
     {
+        Debug.Log(this.transform.childCount);
         if (this.transform.childCount >= 3)
             return;
 
+        Debug.Log("oi");
         GameObject dropObj = eventData.pointerDrag; 
         DeathOptionUI card = dropObj.GetComponent<DeathOptionUI>();
         card.parentAfterDrag = this.transform;
@@ -27,17 +28,7 @@ public class DeathUISelectArea : MonoBehaviour, IDropHandler
 
             option.data = data;
             option.icon.sprite = data.icon;
-
-            Dictionary<string, float> nonZeroValue = data.GetNonZeroValues();
-            string[] tags = nonZeroValue.Keys.ToArray();
-            float[] values = nonZeroValue.Values.ToArray();
-
-            for (int x = 0; x < ( nonZeroValue.Count > 5 ? 5 : nonZeroValue.Count ); x++)
-            {
-                option.stats[x].gameObject.SetActive(true);
-                option.stats[x].text = tags[x] + " " + (values[x] > 0 ? "+" : "-") + values[x];
-            }
-
+            option.desc.text = data.GetDescription();
         }
     }
 }

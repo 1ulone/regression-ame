@@ -4,6 +4,7 @@ public class EnemyRanged : BaseEnemy
 {
     [SerializeField] protected float chargeTime = 2.5f;
     protected bool chargeDone = false;
+    protected Vector3 dir;
 
     protected override void enterAttack()
     {
@@ -18,6 +19,7 @@ public class EnemyRanged : BaseEnemy
         {
             startTime = Time.time;
             chargeDone = true;
+            dir = chaseTarget.position - transform.position;
             shoot();
         }
 
@@ -30,7 +32,6 @@ public class EnemyRanged : BaseEnemy
 
     protected void shoot()
     {
-        Vector3 dir = chaseTarget.position - transform.position;
         data.getAttackBehaviour(transform.position, dir, this as BaseEnemy).Invoke();
     }
 }

@@ -49,7 +49,7 @@ public class Pool : MonoBehaviour
         if (prefab.TryGetComponent<Rigidbody2D>(out Rigidbody2D rb))
             rb.linearVelocity = Vector2.zero;
 
-        prefab.gameObject.transform.position = Vector3.zero;
+        // prefab.gameObject.transform.position = Vector3.zero;
         prefab.gameObject.SetActive(false);
         prefab.transform.SetParent(this.transform);
 
