@@ -125,5 +125,5 @@ public class EnemyData : ScriptableObject
         }
     }
 
-    public PlayerBuffData[] data; 
+    public PlayerBuffData data; 
 }

@@ -17,5 +17,4 @@ MonoBehaviour:
   moveSpeed: 1
   type: 0
   passive: 2
-  data:
-  - {fileID: 11400000, guid: 5a1ddc176fcb59221b19b42d5006d9f3, type: 2}
+  data: {fileID: 11400000, guid: 5a1ddc176fcb59221b19b42d5006d9f3, type: 2}

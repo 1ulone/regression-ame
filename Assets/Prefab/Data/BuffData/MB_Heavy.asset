@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d61769248be8e3afd954b59811e555ed, type: 3}
   m_Name: MB_Heavy
   m_EditorClassIdentifier: Assembly-CSharp::PlayerBuffData
-  icon: {fileID: 2640810445432825198, guid: a9ae6d1629c829a86b2cf00478152c2a, type: 3}
+  icon: {fileID: 2261768388355895034, guid: 89e0a201375f362ddbb7b89ba4bab70d, type: 3}
   tag: Summon! Big Ame!
   health: 4
   attack: 3

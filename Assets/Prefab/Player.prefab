@@ -108,7 +108,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   input: {fileID: 0}
   ui: {fileID: 0}
-  defaultMaxHealth: 10
+  defaultMaxHealth: 1
   defaultDamage: 1
   defaultMoveSpeed: 7.5
   defaultRollMultiplier: 1.5

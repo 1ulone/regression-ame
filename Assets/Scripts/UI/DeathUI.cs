@@ -1,6 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+// using System.Collections.Generic;
+// using System.Linq;
 using UnityEngine;
 using TMPro;
 
@@ -15,6 +15,8 @@ public class DeathUI : MonoBehaviour
     [SerializeField] private GameObject optionsTime;
     [SerializeField] private GameObject dropArea;
     [SerializeField] private GameObject skillRestartButton;
+
+    [SerializeField] private PlayerBuffData[] randomGeneralBuff;
 
     private void Awake()
     { 
@@ -52,26 +54,35 @@ public class DeathUI : MonoBehaviour
         dropArea.SetActive(true);
         optionsTime.SetActive(false);
 
+        int randomLen = Random.Range(1, 4);
 
-        for (int i = 0; i < dataGet.data.Length; i++)
+        for (int i = 0; i < randomLen; i++)
         {
             DeathOptionUI option = Pool.instances.CreateObject("card", transform.position, Vector2.zero).GetComponent<DeathOptionUI>();
 
             holder[i].gameObject.SetActive(true);
-
             option.transform.SetParent(holder[i]);
-            option.data = dataGet.data[i];
-            option.icon.sprite = dataGet.data[i].icon;
 
-            Dictionary<string, float> nonZeroValue = dataGet.data[i].GetNonZeroValues();
-            string[] tags = nonZeroValue.Keys.ToArray();
-            float[] values = nonZeroValue.Values.ToArray();
-
-            for (int x = 0; x < ( nonZeroValue.Count > 5 ? 5 : nonZeroValue.Count ); x++)
+            PlayerBuffData dataToUse = dataGet.data;
+            if (i != 0)
             {
-                option.stats[x].gameObject.SetActive(true);
-                option.stats[x].text = tags[x] + " " + (values[x] > 0 ? "+" : "-") + values[x];
+                int randGeneral = Random.Range(0, randomGeneralBuff.Length);
+                dataToUse = randomGeneralBuff[randGeneral];
             }
+
+            option.data = dataToUse;
+            option.icon.sprite = dataToUse.icon;
+            option.desc.text = dataToUse.GetDescription();
+
+            // Dictionary<string, float> nonZeroValue = dataGet.data[i].GetNonZeroValues();
+            // string[] tags = nonZeroValue.Keys.ToArray();
+            // float[] values = nonZeroValue.Values.ToArray();
+            //
+            // for (int x = 0; x < ( nonZeroValue.Count > 5 ? 5 : nonZeroValue.Count ); x++)
+            // {
+            //     option.stats[x].gameObject.SetActive(true);
+            //     option.stats[x].text = tags[x] + " " + (values[x] > 0 ? "+" : "-") + values[x];
+            // }
         }
 
         selectArea.SyncWithData(GameController.instances.currentSave.playerSkill);

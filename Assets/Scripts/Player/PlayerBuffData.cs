@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using System.Reflection;
 using System.Collections.Generic;
@@ -60,19 +59,22 @@ public class PlayerBuffData : ScriptableObject
         string b = "";
         switch (behaviour)
         {
-            case attackType.melee : {  } break;
-            case attackType.shoot : {  } break;
-            case attackType.railgun : {  } break;
-            case attackType.spawn : {  } break;
+            case attackType.melee : { b = ""; } break;
+            case attackType.shoot : { b = "Weapon->Default gun"; } break;
+            case attackType.shotgun : { b = "Weapon->Reliable Shotgun"; } break;
+            case attackType.railgun : { b = "Weapon->White-Stripe Rifle"; } break;
         }
         
         string p = "";
         switch (passive)
         {
+            case passiveType.none : { p = ""; } break;
             case passiveType.bulletHell : { p = "Spawns 3 Magic Bullets around ame every 5s"; } break;
+            case passiveType.randomSpawn : { p = "Spawn tako tentacle on Random nearby Enemy for every 5s"; } break;
+            case passiveType.shockwave : { p = "Randomly Throws Ame-nade to a random Direction every 3s"; } break;
         }
 
-        return h + a + s + b + p;
+        return h + "\n" + a + "\n" + s + "\n" + "\n" + b + "\n" + p;
 
     }
 }
