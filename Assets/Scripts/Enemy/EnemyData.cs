@@ -34,7 +34,8 @@ public class EnemyData : ScriptableObject
                 {
                     string attackPrefab = "enemyMeleeAttack";
 
-                    DamageComponent a = Pool.instances.CreateObject(attackPrefab, pos + (dir.normalized * 2), dir.normalized).GetComponent<DamageComponent>();
+                    float rotateDir = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+                    DamageComponent a = Pool.instances.CreateObject(attackPrefab, pos + (dir.normalized), new Vector3(0, 0, rotateDir+90)).GetComponent<DamageComponent>();
                     a.enemyReference = mb;
                     a.damage = damage;
                 };

@@ -1,19 +1,13 @@
 fileFormatVersion: 2
-guid: 2d17934fe9e2b42cea3a3f8f61bd28e0
+guid: 1085a8acb1611b140a9728b57959d295
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5561189448537188173
-    second: enemy-attack-tell_0
+      213: 9186816713212580690
+    second: melee-attack_0
   - first:
-      213: 360233708616126541
-    second: enemy-attack-tell_1
-  - first:
-      213: -5897521719155071985
-    second: enemy-attack-tell_2
-  - first:
-      213: 2971227983001852143
-    second: enemy-attack-tell_3
+      213: 5348056061687383448
+    second: melee-attack_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -106,7 +100,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
-    buildTarget: Android
+    buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -118,150 +112,71 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: enemy-attack-tell_0
+      name: melee-attack_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 8
-        height: 8
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        width: 32
+        height: 16
+      alignment: 2
+      pivot: {x: 0.5, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3b85a4739afa2d2b0800000000000000
-      internalID: -5561189448537188173
+      spriteID: 25358a770212e7f70800000000000000
+      internalID: 9186816713212580690
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: enemy-attack-tell_1
-      rect:
-        serializedVersion: 2
-        x: 8
-        y: 0
-        width: 8
-        height: 8
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: d409f2e36aecff400800000000000000
-      internalID: 360233708616126541
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: enemy-attack-tell_2
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 0
-        width: 8
-        height: 8
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: f046c9a2e3bc72ea0800000000000000
-      internalID: -5897521719155071985
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: enemy-attack-tell_3
-      rect:
-        serializedVersion: 2
-        x: 24
-        y: 0
-        width: 8
-        height: 8
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: fe89689bb1ceb3920800000000000000
-      internalID: 2971227983001852143
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: enemy-attack-tell_4
+      name: melee-attack_1
       rect:
         serializedVersion: 2
         x: 32
         y: 0
-        width: 8
-        height: 8
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        width: 32
+        height: 16
+      alignment: 2
+      pivot: {x: 0.5, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 9c2276f9ff38e1242aba793997aef9cc
-      internalID: 1248155033
+      spriteID: 89540c327ac183a40800000000000000
+      internalID: 5348056061687383448
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: enemy-attack-tell_5
+      name: melee-attack_2
       rect:
         serializedVersion: 2
-        x: 40
+        x: 64
         y: 0
-        width: 8
-        height: 8
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        width: 32
+        height: 16
+      alignment: 2
+      pivot: {x: 0.5, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 69162feb3926999458a252bf6d3dead6
-      internalID: 1559275626
+      spriteID: 686fec857b511bd4c91c1bd9f22f47f8
+      internalID: 646074442
       vertices: []
       indices: 
       edges: []
@@ -270,7 +185,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 599ce60b217cbd04a91cf25aba298af6
+    spriteID: e4e310d8cb1bffc46bb8d2a670f6eac6
     internalID: 0
     vertices: []
     indices: 
@@ -280,14 +195,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":8.0,"y":8.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":3.0,"y":1.0},"gridSpriteSize":{"x":32.0,"y":16.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":1.0},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":2,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      enemy-attack-tell_0: -5561189448537188173
-      enemy-attack-tell_1: 360233708616126541
-      enemy-attack-tell_2: -5897521719155071985
-      enemy-attack-tell_3: 2971227983001852143
-      enemy-attack-tell_4: 1248155033
-      enemy-attack-tell_5: 1559275626
+      melee-attack_0: 9186816713212580690
+      melee-attack_1: 5348056061687383448
+      melee-attack_2: 646074442
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

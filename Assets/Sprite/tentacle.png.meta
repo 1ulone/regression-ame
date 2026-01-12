@@ -1,19 +1,22 @@
 fileFormatVersion: 2
-guid: 2d17934fe9e2b42cea3a3f8f61bd28e0
+guid: 8e614304b1492d3418f4dfc9cf5c78f9
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5561189448537188173
-    second: enemy-attack-tell_0
+      213: 3267209078268184784
+    second: tentacle_0
   - first:
-      213: 360233708616126541
-    second: enemy-attack-tell_1
+      213: -6020195223038050601
+    second: tentacle_1
   - first:
-      213: -5897521719155071985
-    second: enemy-attack-tell_2
+      213: 7974938107837316919
+    second: tentacle_2
   - first:
-      213: 2971227983001852143
-    second: enemy-attack-tell_3
+      213: 2031517948072034325
+    second: tentacle_3
+  - first:
+      213: -7668338019429465720
+    second: tentacle_4
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +49,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -60,7 +63,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 16
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -84,7 +87,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -106,7 +109,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
-    buildTarget: Android
+    buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -118,150 +121,115 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: enemy-attack-tell_0
+      name: tentacle_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 9
         y: 0
-        width: 8
+        width: 11
         height: 8
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3b85a4739afa2d2b0800000000000000
-      internalID: -5561189448537188173
+      spriteID: 0d84b15a855775d20800000000000000
+      internalID: 3267209078268184784
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: enemy-attack-tell_1
+      name: tentacle_1
       rect:
         serializedVersion: 2
-        x: 8
+        x: 34
         y: 0
-        width: 8
-        height: 8
+        width: 16
+        height: 21
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d409f2e36aecff400800000000000000
-      internalID: 360233708616126541
+      spriteID: 7de305c4758f37ca0800000000000000
+      internalID: -6020195223038050601
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: enemy-attack-tell_2
+      name: tentacle_2
       rect:
         serializedVersion: 2
-        x: 16
+        x: 67
         y: 0
-        width: 8
-        height: 8
+        width: 23
+        height: 30
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f046c9a2e3bc72ea0800000000000000
-      internalID: -5897521719155071985
+      spriteID: 73f7e5fb4fbacae60800000000000000
+      internalID: 7974938107837316919
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: enemy-attack-tell_3
+      name: tentacle_3
       rect:
         serializedVersion: 2
-        x: 24
+        x: 101
         y: 0
-        width: 8
-        height: 8
+        width: 18
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: fe89689bb1ceb3920800000000000000
-      internalID: 2971227983001852143
+      spriteID: 5100aa17fc6613c10800000000000000
+      internalID: 2031517948072034325
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: enemy-attack-tell_4
+      name: tentacle_4
       rect:
         serializedVersion: 2
-        x: 32
+        x: 131
         y: 0
-        width: 8
-        height: 8
+        width: 21
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 9c2276f9ff38e1242aba793997aef9cc
-      internalID: 1248155033
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: enemy-attack-tell_5
-      rect:
-        serializedVersion: 2
-        x: 40
-        y: 0
-        width: 8
-        height: 8
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 69162feb3926999458a252bf6d3dead6
-      internalID: 1559275626
+      spriteID: 881c84e2337949590800000000000000
+      internalID: -7668338019429465720
       vertices: []
       indices: 
       edges: []
@@ -270,7 +238,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 599ce60b217cbd04a91cf25aba298af6
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -278,16 +246,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries:
-      - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":8.0,"y":8.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+      entries: []
     nameFileIdTable:
-      enemy-attack-tell_0: -5561189448537188173
-      enemy-attack-tell_1: 360233708616126541
-      enemy-attack-tell_2: -5897521719155071985
-      enemy-attack-tell_3: 2971227983001852143
-      enemy-attack-tell_4: 1248155033
-      enemy-attack-tell_5: 1559275626
+      tentacle_0: 3267209078268184784
+      tentacle_1: -6020195223038050601
+      tentacle_2: 7974938107837316919
+      tentacle_3: 2031517948072034325
+      tentacle_4: -7668338019429465720
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

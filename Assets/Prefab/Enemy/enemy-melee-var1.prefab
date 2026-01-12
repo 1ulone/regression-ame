@@ -115,7 +115,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   attackSpeed: 3
-  chargeTime: 1
+  chargeTime: 0.9
 --- !u!50 &3584038357350417459
 Rigidbody2D:
   serializedVersion: 5

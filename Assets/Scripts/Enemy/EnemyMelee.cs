@@ -24,18 +24,23 @@ public class EnemyMelee : BaseEnemy
             dir = chaseTarget.position - transform.position;
             melee();
         }
-
-        if (!chargeDone)
-            return;
-
-        if (Time.time > startTime + attackTime)
-            ChangeState(state.cooldown);
     }
 
     protected void melee()
     {
         anim.Play("attack");
         data.getAttackBehaviour(transform.position, dir, this as BaseEnemy).Invoke();
+    }
+
+    protected override void exitAttack()
+    {
+        base.exitAttack();
+        anim.Play("idle");
+    }
+
+    public void endAttack()
+    {
+        ChangeState(state.cooldown);
     }
 
 }
