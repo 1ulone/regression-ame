@@ -13,6 +13,7 @@ public class DeathUISelectArea : MonoBehaviour, IDropHandler
         DeathOptionUI card = dropObj.GetComponent<DeathOptionUI>();
         card.parentAfterDrag = this.transform;
 
+        Audio.instances.PlaySFX("Confirm");
         GameController.instances.AddSkill(card.data);
     }
 

@@ -164,6 +164,7 @@ public class PlayerController : MonoBehaviour, IHealthComponent
             startTime = Time.time;
             isAttack = true;
 
+
             shootRandomness = new Vector3(UnityEngine.Random.Range(-1f, 1f) * randomShootMultiplier, UnityEngine.Random.Range(-1f, 1f) * randomShootMultiplier, 0);
             Vector3 dir = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()) - transform.position;
 
@@ -188,6 +189,8 @@ public class PlayerController : MonoBehaviour, IHealthComponent
 
         if (roll.WasPressedThisFrame() && !isRolling && !rollOnCooldown && !isAttack)
         {
+            Audio.instances.PlaySFX("dash");
+
             startTime = Time.time;
             isRolling = true;
             rb.linearVelocity = Vector2.zero;

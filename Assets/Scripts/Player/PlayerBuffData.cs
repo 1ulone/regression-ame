@@ -88,6 +88,7 @@ public class PlayerBuffData : ScriptableObject
                 {
                     string attackPrefab = "playerBullet";
 
+                    Audio.instances.PlaySFX("gun");
                     float z = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
                     DamageComponent b = Pool.instances.CreateObject(attackPrefab, pos, new Vector3(0, 0, z+90)).GetComponent<DamageComponent>();
                     b.gameObject.GetComponent<Rigidbody2D>().linearVelocity = dir * 3; 
@@ -103,6 +104,7 @@ public class PlayerBuffData : ScriptableObject
                     float spreadAngle = 30f;
                     float angleStep = spreadAngle / 2;
                     float startAngle = -spreadAngle / 2;
+                    Audio.instances.PlaySFX("gun");
 
                     for (int i = 0; i < 3; i++)
                     {
@@ -123,6 +125,7 @@ public class PlayerBuffData : ScriptableObject
                 return ()=>
                 {
                     string attackPrefab = "playerRailgun";
+                    Audio.instances.PlaySFX("railgun-release");
 
                     float rotateDir = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
                     DamageComponent a = Pool.instances.CreateObject(attackPrefab, pos + (dir.normalized * 2), new Vector3(0, 0, rotateDir)).GetComponent<DamageComponent>();
@@ -151,6 +154,7 @@ public class PlayerBuffData : ScriptableObject
                     float bulletPerRound = 8f;
                     float angleStep = 45;
                     float startAngle = 0;
+                    Audio.instances.PlaySFX("gun");
 
                     for (int i = 0; i < bulletPerRound; i++)
                     {
@@ -170,6 +174,7 @@ public class PlayerBuffData : ScriptableObject
                 return ()=> 
                 {
                     string attackPrefab = "playerSpawnAttack";
+                    Audio.instances.PlaySFX("Sword_Slash");
 
                     Collider2D[] colliders = Physics2D.OverlapCircleAll(pos, 16, enemy);
                     if (colliders.Length > 0)

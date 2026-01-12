@@ -6,4 +6,9 @@ public class DestroyOnCall : MonoBehaviour
     {
         Pool.instances.DestroyObject(this.gameObject);
     }
+
+    public void ExplosionSFX()
+    {
+        Audio.instances.PlaySFX("Explosion");
+    }
 }

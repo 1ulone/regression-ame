@@ -8,6 +8,8 @@ public class DeathUITrashArea : MonoBehaviour, IDropHandler
         GameObject dropObj = eventData.pointerDrag; 
         DeathOptionUI card = dropObj.GetComponent<DeathOptionUI>();
 
+        Audio.instances.PlaySFX("Cancel");
+
         GameController.instances.RemoveSkill(card.data);
         Pool.instances.DestroyObject(card.gameObject);
     }

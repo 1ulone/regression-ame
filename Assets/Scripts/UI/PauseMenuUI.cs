@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
+// using System.Linq;
 // using UnityEngine.UI;
 // using TMPro;
 
@@ -43,6 +43,7 @@ public class PauseMenuUI : MonoBehaviour
         if (onTransitioning)
             return;
 
+        Audio.instances.PlaySFX("pause");
         if (!onPause)
             StartCoroutine(enterTransition());
         else 

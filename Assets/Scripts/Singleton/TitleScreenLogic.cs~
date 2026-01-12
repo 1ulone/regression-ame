@@ -96,14 +96,17 @@ public class TitleScreenLogic : MonoBehaviour
         onTransitioning = false;
     }
 
-    public void MasterSlider(float value) {
-        masterMixer.SetFloat("Master", Mathf.Log10(value) * 20f);
+    public void MasterSlider(float sliderValue) {
+        masterValue = Mathf.Log10(sliderValue) * 20f;
+        masterMixer.SetFloat("Master", masterValue);
     }
-    public void BGMSlider(float value) {
-        masterMixer.SetFloat("BGM", Mathf.Log10(value) * 20f);
+    public void BGMSlider(float sliderValue) {
+        bgmValue = Mathf.Log10(sliderValue) * 20f;
+        masterMixer.SetFloat("BGM", bgmValue);
     }
-    public void SFXSlider(float value) {
-        masterMixer.SetFloat("SFX", Mathf.Log10(value) * 20f);
+    public void SFXSlider(float sliderValue) {
+        sfxValue = Mathf.Log10(sliderValue) * 20f;
+        masterMixer.SetFloat("SFX", sfxValue);
     }
 
     // NOTE: Settings Popup Functions

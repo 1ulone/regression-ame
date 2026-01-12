@@ -38,6 +38,8 @@ public class EnemyData : ScriptableObject
                     DamageComponent a = Pool.instances.CreateObject(attackPrefab, pos + (dir.normalized), new Vector3(0, 0, rotateDir+90)).GetComponent<DamageComponent>();
                     a.enemyReference = mb;
                     a.damage = damage;
+
+                    Audio.instances.PlaySFX("Sword_Slash");
                 };
             }
 
@@ -46,6 +48,7 @@ public class EnemyData : ScriptableObject
                 return ()=>
                 {
                     string attackPrefab = "enemyBullet";
+                    Audio.instances.PlaySFX("gun");
 
                     float rotateDir = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
                     DamageComponent b = Pool.instances.CreateObject(attackPrefab, pos + (dir.normalized *2), new Vector3(0, 0, rotateDir)).GetComponent<DamageComponent>();
@@ -60,6 +63,7 @@ public class EnemyData : ScriptableObject
                 return ()=>
                 {
                     string attackPrefab = "enemyBullet";
+                    Audio.instances.PlaySFX("gun");
                     float spreadAngle = 30f;
                     float angleStep = spreadAngle / 2;
                     float startAngle = -spreadAngle / 2;
@@ -83,6 +87,7 @@ public class EnemyData : ScriptableObject
                 return ()=> 
                 {
                     string attackPrefab = "enemyRailgun";
+                    Audio.instances.PlaySFX("railgun-release");
 
                     float rotateDir = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
                     DamageComponent a = Pool.instances.CreateObject(attackPrefab, pos + (dir.normalized * 2), new Vector3(0, 0, rotateDir)).GetComponent<DamageComponent>();
@@ -96,6 +101,7 @@ public class EnemyData : ScriptableObject
                 return ()=>
                 {
                     string attackPrefab = "enemyMagicBullet";
+                    Audio.instances.PlaySFX("railgun-charge");
 
                     DamageComponent b = Pool.instances.CreateObject(attackPrefab, pos + (dir.normalized *2), Vector2.zero).GetComponent<DamageComponent>();
                     MissileComponent m = b.GetComponent<MissileComponent>();
@@ -115,6 +121,7 @@ public class EnemyData : ScriptableObject
                 return ()=>
                 {
                     string attackPrefab = "enemySpawnAttack";
+                    Audio.instances.PlaySFX("Sword_Slash");
 
                     Transform target = MonoBehaviour.FindFirstObjectByType<PlayerController>().transform;
                     DamageComponent a = Pool.instances.CreateObject(attackPrefab, target.position, Vector2.zero).GetComponent<DamageComponent>();

@@ -167,6 +167,7 @@ public class BaseEnemy : MonoBehaviour, IHealthComponent
 
     protected virtual void enterDeath() 
     {
+        Audio.instances.PlaySFX("wah");
         Destroy(this.gameObject);
     }
 
