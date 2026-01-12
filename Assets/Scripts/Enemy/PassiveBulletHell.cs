@@ -32,7 +32,7 @@ public class PassiveBulletHell : MonoBehaviour
             float currentAngle = startAngle + (angleStep * i);
             Vector3 currentDirection = Quaternion.Euler(0, 0, currentAngle) * Vector2.down;
 
-            DamageComponent b = Pool.instances.CreateObject(attackPrefab, transform.position + (currentDirection*2), Vector2.zero).GetComponent<DamageComponent>();
+            DamageComponent b = Pool.instances.CreateObject(attackPrefab, transform.position + (currentDirection*2), currentDirection).GetComponent<DamageComponent>();
             // b.GetComponent<DestroyOnExitView>().enabled = false;
 
             b.gameObject.GetComponent<Rigidbody2D>().linearVelocity = currentDirection * 1 * 3; 

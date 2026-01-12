@@ -1,10 +1,12 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections.Generic;
 
 public class Pool : MonoBehaviour
 {
     public static Pool instances;
 
+    [SerializeField] private RectTransform uipoolParent;
     [SerializeField] private List<poolObject> poolLists;
     private Dictionary<string, Queue<GameObject>> poolDicts;
 
@@ -19,7 +21,10 @@ public class Pool : MonoBehaviour
             for (int i = 0; i < po.count; i++)
             {
                 GameObject np = Instantiate(po.obj);
-                np.transform.SetParent(this.transform);
+                if (po.tag.ToLower() == "card")
+                    np.transform.SetParent(uipoolParent);
+                else 
+                    np.transform.SetParent(this.transform);
                 np.SetActive(false);
                 nq.Enqueue(np);
                 np.name = po.tag.ToLower();

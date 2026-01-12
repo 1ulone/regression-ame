@@ -26,6 +26,7 @@ public class DeathUISelectArea : MonoBehaviour, IDropHandler
 
             option.data = data;
             option.icon.sprite = data.icon;
+            option.title.text = data.tag;
             option.desc.text = data.GetDescription();
         }
     }

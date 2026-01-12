@@ -72,6 +72,7 @@ public class DeathUI : MonoBehaviour
 
             option.data = dataToUse;
             option.icon.sprite = dataToUse.icon;
+            option.title.text = dataToUse.tag;
             option.desc.text = dataToUse.GetDescription();
 
             // Dictionary<string, float> nonZeroValue = dataGet.data[i].GetNonZeroValues();

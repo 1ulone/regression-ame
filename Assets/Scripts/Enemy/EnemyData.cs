@@ -47,7 +47,8 @@ public class EnemyData : ScriptableObject
                 {
                     string attackPrefab = "enemyBullet";
 
-                    DamageComponent b = Pool.instances.CreateObject(attackPrefab, pos + (dir.normalized *2), Vector2.zero).GetComponent<DamageComponent>();
+                    float rotateDir = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+                    DamageComponent b = Pool.instances.CreateObject(attackPrefab, pos + (dir.normalized *2), new Vector3(0, 0, rotateDir)).GetComponent<DamageComponent>();
                     b.gameObject.GetComponent<Rigidbody2D>().linearVelocity = dir * 3; 
                     b.enemyReference = mb;
                     b.damage = damage;
@@ -68,7 +69,7 @@ public class EnemyData : ScriptableObject
                         float currentAngle = startAngle + (angleStep * i);
                         Vector2 currentDirection = Quaternion.Euler(0, 0, currentAngle) * dir.normalized;
 
-                        DamageComponent b = Pool.instances.CreateObject(attackPrefab, pos + (dir.normalized *2), Vector2.zero).GetComponent<DamageComponent>();
+                        DamageComponent b = Pool.instances.CreateObject(attackPrefab, pos + (dir.normalized *2), new Vector3(0, 0, currentAngle+90)).GetComponent<DamageComponent>();
 
                         b.gameObject.GetComponent<Rigidbody2D>().linearVelocity = currentDirection * 6 * 3; 
                         b.enemyReference = mb;

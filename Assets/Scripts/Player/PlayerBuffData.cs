@@ -53,30 +53,29 @@ public class PlayerBuffData : ScriptableObject
     
     public string GetDescription()
     {
-        string h = health == 0 ? "" : (health > 0 ? "health +"+health.ToString() : "health -"+health.ToString());
-        string a = attack == 0 ? "" : (attack > 0 ? "attack +"+attack.ToString() : "attack -"+attack.ToString());
-        string s = speed == 0 ? "" : (speed > 0 ? "speed +"+speed.ToString() : "speed -"+speed.ToString());
+        string h = health == 0 ? "" : (health > 0 ? "health +"+health.ToString()+"\n" : "health "+health.ToString())+"\n";
+        string a = attack == 0 ? "" : (attack > 0 ? "attack +"+attack.ToString()+"\n" : "attack "+attack.ToString())+"\n";
+        string s = speed == 0 ? "" : (speed > 0 ? "speed +"+speed.ToString()+"\n" : "speed -"+speed.ToString())+"\n";
 
         string b = "";
         switch (behaviour)
         {
             case attackType.melee : { b = ""; } break;
-            case attackType.shoot : { b = "Weapon->Default gun"; } break;
-            case attackType.shotgun : { b = "Weapon->Reliable Shotgun"; } break;
-            case attackType.railgun : { b = "Weapon->White-Stripe Rifle"; } break;
+            case attackType.shoot : { b = "Weapon->Default gun\n"; } break;
+            case attackType.shotgun : { b = "Weapon->Reliable Shotgun\n"; } break;
+            case attackType.railgun : { b = "Weapon->White-Stripe Rifle\n"; } break;
         }
         
         string p = "";
         switch (passive)
         {
             case passiveType.none : { p = ""; } break;
-            case passiveType.bulletHell : { p = "Spawns 3 Magic Bullets around ame every 5s"; } break;
-            case passiveType.randomSpawn : { p = "Spawn tako tentacle on Random nearby Enemy for every 5s"; } break;
-            case passiveType.shockwave : { p = "Randomly Throws Ame-nade to a random Direction every 3s"; } break;
+            case passiveType.bulletHell : { p = "Spawns 3 Magic Bullets around ame every 5s\n"; } break;
+            case passiveType.randomSpawn : { p = "Spawn tako tentacle on Random nearby Enemy for every 5s\n"; } break;
+            case passiveType.shockwave : { p = "Randomly Throws Ame-nade to a random Direction every 3s\n"; } break;
         }
 
-        return h + "\n" + a + "\n" + s + "\n" + "\n" + b + "\n" + p;
-
+        return h + a + s + b + p;
     }
 
     public Action GetAttackBehaviour(Vector2 dir, int damage, Vector2 pos)
@@ -89,7 +88,8 @@ public class PlayerBuffData : ScriptableObject
                 {
                     string attackPrefab = "playerBullet";
 
-                    DamageComponent b = Pool.instances.CreateObject(attackPrefab, pos, Vector2.zero).GetComponent<DamageComponent>();
+                    float z = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+                    DamageComponent b = Pool.instances.CreateObject(attackPrefab, pos, new Vector3(0, 0, z+90)).GetComponent<DamageComponent>();
                     b.gameObject.GetComponent<Rigidbody2D>().linearVelocity = dir * 3; 
                     b.damage = damage;
                 };
@@ -109,7 +109,7 @@ public class PlayerBuffData : ScriptableObject
                         float currentAngle = startAngle + (angleStep * i);
                         Vector2 currentDirection = Quaternion.Euler(0, 0, currentAngle) * dir.normalized;
 
-                        DamageComponent b = Pool.instances.CreateObject(attackPrefab, pos, Vector2.zero).GetComponent<DamageComponent>();
+                        DamageComponent b = Pool.instances.CreateObject(attackPrefab, pos, new Vector3(0, 0, currentAngle)).GetComponent<DamageComponent>();
 
                         b.gameObject.GetComponent<Rigidbody2D>().linearVelocity = currentDirection * 6 * 3; 
                         b.damage = damage;
@@ -147,8 +147,8 @@ public class PlayerBuffData : ScriptableObject
             {
                 return ()=> 
                 {
-                    float bulletPerRound = 8f;
                     string attackPrefab = "playerBullet";
+                    float bulletPerRound = 8f;
                     float angleStep = 45;
                     float startAngle = 0;
 
@@ -157,7 +157,7 @@ public class PlayerBuffData : ScriptableObject
                         float currentAngle = startAngle + (angleStep * i);
                         Vector2 currentDirection = Quaternion.Euler(0, 0, currentAngle) * Vector2.right;
 
-                        DamageComponent b = Pool.instances.CreateObject(attackPrefab, pos + (currentDirection*2), Vector2.zero).GetComponent<DamageComponent>();
+                        DamageComponent b = Pool.instances.CreateObject(attackPrefab, pos + (currentDirection*2), new Vector3(0, 0, currentAngle+90)).GetComponent<DamageComponent>();
 
                         b.gameObject.GetComponent<Rigidbody2D>().linearVelocity = currentDirection * 3 * 3; 
                         b.damage = damage;

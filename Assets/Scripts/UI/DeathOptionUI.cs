@@ -8,6 +8,7 @@ public class DeathOptionUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 {
     public Image parentGroup;
     public Image icon;
+    public TextMeshProUGUI title;
     public TextMeshProUGUI desc;
     public PlayerBuffData data { get; set; }
 
