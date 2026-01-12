@@ -6,11 +6,9 @@ public class DeathUISelectArea : MonoBehaviour, IDropHandler
 {
     public void OnDrop(PointerEventData eventData)
     {
-        Debug.Log(this.transform.childCount);
         if (this.transform.childCount >= 3)
             return;
 
-        Debug.Log("oi");
         GameObject dropObj = eventData.pointerDrag; 
         DeathOptionUI card = dropObj.GetComponent<DeathOptionUI>();
         card.parentAfterDrag = this.transform;

@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class BaseEnemy : MonoBehaviour, IHealthComponent 
 {
@@ -14,9 +15,13 @@ public class BaseEnemy : MonoBehaviour, IHealthComponent
     protected state _state;
     protected Rigidbody2D rb;
     protected Transform chaseTarget;
-    protected float startTime;
+    protected SpriteRenderer rend;
+    protected Animator anim;
+
     protected int health;
+    protected float startTime;
     protected float chaseSpeed;
+    protected bool isHurt;
     
     [SerializeField] protected EnemyData data;
     [SerializeField] protected float chaseRange = 10;
@@ -31,6 +36,9 @@ public class BaseEnemy : MonoBehaviour, IHealthComponent
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        rend = GetComponent<SpriteRenderer>();
+        anim = GetComponent<Animator>();
+
         chaseTarget = GameObject.FindFirstObjectByType<PlayerController>().transform; 
         health = data.health;
         chaseSpeed = data.moveSpeed;
@@ -84,7 +92,7 @@ public class BaseEnemy : MonoBehaviour, IHealthComponent
         }
     }
 
-    private void UpdateLogic()
+    protected virtual void UpdateLogic()
     {
         switch(_state)
         {
@@ -95,18 +103,18 @@ public class BaseEnemy : MonoBehaviour, IHealthComponent
         }
     }
 
-    protected void transitionIdle() 
+    protected virtual void transitionIdle() 
     {
         rb.linearVelocity = Vector2.zero;
     }
     
-    protected void updateIdle()
+    protected virtual void updateIdle()
     {
         if (Physics2D.OverlapCircle(transform.position, chaseRange, playerLayer))
             ChangeState(state.chase);
     }
 
-    protected void updateChase() 
+    protected virtual void updateChase() 
     {
         if (!Physics2D.OverlapCircle(transform.position, chaseRange, playerLayer))
             ChangeState(state.idle);
@@ -140,32 +148,53 @@ public class BaseEnemy : MonoBehaviour, IHealthComponent
             ChangeState(state.cooldown);
     }
 
-    protected void exitCooldown() 
+    protected virtual void exitCooldown() 
     {  
         // Debug.Log("cooldown-end");
     }
 
-    protected void enterCooldown() 
+    protected virtual void enterCooldown() 
     {
         // Debug.Log("enter-cooldown");
         startTime = Time.time;
     }
 
-    protected void updateCooldown() 
+    protected virtual void updateCooldown() 
     {
         if (Time.time > startTime + cooldownTime)
             ChangeState(state.idle);
     }
 
-    protected void enterDeath() 
+    protected virtual void enterDeath() 
     {
         Destroy(this.gameObject);
     }
 
     public void OnDamage(int damage, MonoBehaviour reference = null)
     {
+        if (isHurt)
+            return;
+
         rb.linearVelocity = Vector2.zero;
         health -= damage;
         TimeController.instances.HitStop(0.05f);
+        isHurt = true;
+        StartCoroutine(hurtCoroutine());
+    }
+
+    private IEnumerator hurtCoroutine()
+    {
+        int i = 0;
+        while(i < 5)
+        {
+            rend.enabled = true;
+            yield return new WaitForSeconds(0.05f); 
+            rend.enabled = false;
+            yield return new WaitForSeconds(0.05f);
+            i++;
+        }
+
+        rend.enabled = true;
+        isHurt = false;
     }
 }

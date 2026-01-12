@@ -32,7 +32,7 @@ public class EnemyData : ScriptableObject
             {
                 return ()=> 
                 {
-                    string attackPrefab = "meleeAttack";
+                    string attackPrefab = "enemyMeleeAttack";
 
                     DamageComponent a = Pool.instances.CreateObject(attackPrefab, pos + (dir.normalized * 2), dir.normalized).GetComponent<DamageComponent>();
                     a.enemyReference = mb;

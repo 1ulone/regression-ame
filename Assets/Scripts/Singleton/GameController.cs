@@ -23,7 +23,7 @@ public class GameController : MonoBehaviour
     {
         if (!File.Exists(path))
         {
-            SaveData ndata = new SaveData(5);
+            SaveData ndata = new SaveData(30);
             WriteSave(ndata);
             currentSave = ndata;
         }

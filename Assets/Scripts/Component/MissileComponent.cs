@@ -33,7 +33,7 @@ public class MissileComponent : MonoBehaviour
 
     private void OnDisable()
     {
-        if (Time.time > 10)
+        if (enemyRef != null)
             explosionHurtPlayer().Invoke();
     }
 

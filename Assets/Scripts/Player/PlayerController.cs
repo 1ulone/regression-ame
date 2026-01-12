@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
@@ -22,6 +23,8 @@ public class PlayerController : MonoBehaviour, IHealthComponent
 
     [SerializeField] private ShakeData shootScreenshake;
     [SerializeField] private ShakeData hurtScreenshake;
+
+    [SerializeField] private LayerMask enemyLayer;
     
     private InputAction move;
     private InputAction attack;
@@ -67,6 +70,8 @@ public class PlayerController : MonoBehaviour, IHealthComponent
         
         buffs = GameController.instances.currentSave.playerSkill;
         UpdatePlayerStats();
+
+        InvokeRepeating("UpdatePassive", 2, 3.5f);
     }
 
     private void OnEnable()
@@ -117,6 +122,7 @@ public class PlayerController : MonoBehaviour, IHealthComponent
             {
                 if (Time.time >= startTime + rollCooldownTime)
                 {
+                    attackOnCooldown = false;
                     rollOnCooldown = false;
                     startTime = 0;
                 }
@@ -136,6 +142,7 @@ public class PlayerController : MonoBehaviour, IHealthComponent
             {
                 if (Time.time >= startTime + attackCooldownTime)
                 {
+                    rollOnCooldown = false;
                     attackOnCooldown = false;
                     startTime = 0;
                 }
@@ -157,12 +164,24 @@ public class PlayerController : MonoBehaviour, IHealthComponent
             startTime = Time.time;
             isAttack = true;
 
-            shootRandomness = new Vector3(Random.Range(-1f, 1f) * randomShootMultiplier, Random.Range(-1f, 1f) * randomShootMultiplier, 0);
+            shootRandomness = new Vector3(UnityEngine.Random.Range(-1f, 1f) * randomShootMultiplier, UnityEngine.Random.Range(-1f, 1f) * randomShootMultiplier, 0);
             Vector3 dir = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()) - transform.position;
-            GameObject bullet = Pool.instances.CreateObject("playerBullet", transform.position + dir.normalized + shootRandomness, Vector3.zero);
 
-            bullet.GetComponent<Rigidbody2D>().linearVelocity = (dir.normalized * 10) * bulletSpeed;
-            bullet.GetComponent<DamageComponent>().damage = damage;
+            Action attackBehaviour = DefaultShootBehaviour(dir, damage, transform.position + dir.normalized + shootRandomness);
+            if (buffs != null)
+            {
+                foreach (PlayerBuffData data in buffs)
+                {
+                    if (data.behaviour == attackType.shoot || data.behaviour == attackType.shotgun || data.behaviour == attackType.railgun)
+                        attackBehaviour = data.GetAttackBehaviour(dir, damage, transform.position + dir.normalized + shootRandomness);
+                }
+            }
+            attackBehaviour.Invoke();
+
+            // GameObject bullet = Pool.instances.CreateObject("playerBullet", transform.position + dir.normalized + shootRandomness, Vector3.zero);
+            //
+            // bullet.GetComponent<Rigidbody2D>().linearVelocity = (dir.normalized * 10) * bulletSpeed;
+            // bullet.GetComponent<DamageComponent>().damage = damage;
 
             rb.AddForce((-dir.normalized * 100) * moveSpeed /2f);
         }
@@ -274,5 +293,26 @@ public class PlayerController : MonoBehaviour, IHealthComponent
         randomShootMultiplier = defaultRandomShootMultiplier;
         bulletSpeed = defaultBulletSpeed;
         damage = defaultDamage;
+    }
+
+    private Action DefaultShootBehaviour(Vector2 dir, int damage, Vector2 pos)
+    {
+        return ()=> 
+        {
+            string attackPrefab = "playerBullet";
+
+            DamageComponent b = Pool.instances.CreateObject(attackPrefab, pos, Vector2.zero).GetComponent<DamageComponent>();
+            b.gameObject.GetComponent<Rigidbody2D>().linearVelocity = dir * 3; 
+            b.damage = damage;
+        };
+    }
+
+    private void UpdatePassive()
+    {
+        foreach (PlayerBuffData pb in buffs)
+        {
+            if (pb.passive != passiveType.none)
+                pb.GetPassiveBehaviour(damage, transform.position, enemyLayer).Invoke();
+        }
     }
 }
