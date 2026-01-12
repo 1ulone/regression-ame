@@ -23688,7 +23688,7 @@ MonoBehaviour:
   musicSource: {fileID: 758470335}
   sfxSource: {fileID: 213349729}
   MusicList:
-  - {fileID: 8300000, guid: dc2646fa0b091c24ba82a00e378ada19, type: 3}
+  - {fileID: 8300000, guid: 63c7068438500e147bf57492b62fb32d, type: 3}
   SFXList:
   - {fileID: 8300000, guid: d9d2592dc074774499a1ac44fe7bb151, type: 3}
   - {fileID: 8300000, guid: 4bfa5639155942a4191cfb33085b6da7, type: 3}
@@ -31811,13 +31811,13 @@ AudioSource:
   m_GameObject: {fileID: 758470333}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 671255659776579814, guid: f7f73379ba0931b49aa30402f863d4bc, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
