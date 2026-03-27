@@ -25,7 +25,8 @@ public class Audio : MonoBehaviour
             SFXDictionaries.Add(c.name, c);
 
         //Will play the first song on the LIST
-        PlayMusic(MusicList[0].name);
+        if (MusicList.Count > 0)
+            PlayMusic(MusicList[0].name);
     }
 
     public void StopMusic()
